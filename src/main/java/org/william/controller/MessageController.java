@@ -1,11 +1,11 @@
 package org.william.controller;
 
 
-import org.william.MessageService;
 import org.william.MyController;
+import org.william.service.MessageService;
 
 @MyController
-class MessageController {
+public class MessageController {
     private final MessageService service;
 
     // Injeção via construtor

@@ -15,7 +15,7 @@ class MyApplicationContext {
     public MyApplicationContext(Class<?>... components) {
         try {
             for (Class<?> clazz : components) {
-                if (clazz.isAnnotationPresent(MyService.class) || clazz.isAnnotationPresent(MyController.class)) {
+                if (clazz.isAnnotationPresent(MyService.class) || clazz.isAnnotationPresent(MyController.class) || clazz.isAnnotationPresent(MyComponent.class)) {
                     createBean(clazz);
                 }
             }
@@ -30,6 +30,7 @@ class MyApplicationContext {
         }
 
         /* Codigo de correção - não sei se ta certo*/
+        //Todo construtor deve estar publico, se não ele não consegue inicializar
         if(clazz.getConstructors().length == 0){
             Object bean = clazz.newInstance();
             beans.put(clazz, bean);
