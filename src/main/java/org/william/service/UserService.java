@@ -2,6 +2,8 @@ package org.william.service;
 
 import org.william.DataBase;
 import org.william.MyService;
+import org.william.dto.UserCreate;
+import org.william.dto.UserSimple;
 
 import javax.xml.crypto.Data;
 
@@ -14,9 +16,13 @@ public class UserService {
         this.dataBase = dataBase;
     }
 
-    public String createUser() {
-        dataBase.getData().add("William");
-        return "usuario criado";
+    public UserSimple createUser(UserCreate dto) {
+//        dataBase.getData().add("William");
+        UserSimple us = new UserSimple();
+        us.setEmail(dto.getEmail());
+        us.setNome(dto.getNome());
+        us.setSenha(dto.getSenha());
+        return us;
     }
 
     public void updateUser() {

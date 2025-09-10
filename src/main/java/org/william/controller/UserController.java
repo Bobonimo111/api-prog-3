@@ -1,6 +1,8 @@
 package org.william.controller;
 
 import org.william.MyController;
+import org.william.dto.UserCreate;
+import org.william.dto.UserSimple;
 import org.william.service.UserService;
 
 @MyController
@@ -11,8 +13,8 @@ public class UserController {
         this.userService = userService;
     }
 
-    public String createUser() {
-        return userService.createUser();
+    public UserSimple createUser(UserCreate dto) {
+        return userService.createUser(dto);
     }
 
     public void updateUser() {
