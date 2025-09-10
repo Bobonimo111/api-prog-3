@@ -5,6 +5,8 @@ import org.william.dto.UserCreate;
 import org.william.dto.UserSimple;
 import org.william.service.UserService;
 
+import java.util.List;
+
 @MyController
 public class UserController {
     public final UserService userService;
@@ -25,7 +27,7 @@ public class UserController {
 
     }
 
-    public String getAllUsers() {
+    public List<UserSimple> getAllUsers() {
         return userService.getAllUsers();
     }
 }

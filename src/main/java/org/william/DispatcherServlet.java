@@ -25,15 +25,18 @@ class DispatcherServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("text/plain");
+
         String path = req.getPathInfo();
 
         // Roteamento bem simples
 
         if ("/hello".equals(path)) {
+            resp.setContentType("text/plain");
             resp.getWriter().println(controller.hello());
         } else if ("/user".equals(path)) {
-            resp.getWriter().println(userController.getAllUsers());
+            resp.setContentType("application/json");
+            String response = new ObjectMapper().writeValueAsString(userController.getAllUsers());
+            resp.getWriter().println(response);
         } else {
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
             resp.getWriter().println("404 - Not Found");
