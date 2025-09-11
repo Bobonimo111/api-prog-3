@@ -10,10 +10,10 @@ import java.util.List;
 @MyService
 public class UserService {
 
-    public final DumbDataBase dataBase;
+    public final DumbDataBase dumbDataBase;
 
     public UserService(DumbDataBase dataBase) {
-        this.dataBase = dataBase;
+        this.dumbDataBase = dataBase;
     }
 
     public UserSimple createUser(UserCreate dto) {
@@ -24,20 +24,20 @@ public class UserService {
         us.setNome(dto.getNome());
         us.setSenha(dto.getSenha());
 
-        dataBase.getData().add(us);
+        dumbDataBase.saveData(us);
 
         return us;
     }
 
-    public void updateUser() {
-
+    public UserSimple updateUser(UserSimple dto) {
+        return dumbDataBase.edit(dto);
     }
 
-    public void deleteUser() {
-
+    public void deleteUser(String id) {
+        dumbDataBase.remove(id);
     }
 
     public List<UserSimple> getAllUsers() {
-        return this.dataBase.getData();
+        return this.dumbDataBase.getData();
     }
 }

@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class HttpMisc {
 
-    //Objetivo da classe tratar o recebimento de requisições e retornar
+    //Objetivo da classe tratar o recebimento de requisições e retornar o texto plano
     public static String recive(HttpServletRequest req, HttpServletResponse resp){
         StringBuilder stringBuilder = new StringBuilder();
         try{

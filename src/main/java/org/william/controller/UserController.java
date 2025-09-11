@@ -19,12 +19,12 @@ public class UserController {
         return userService.createUser(dto);
     }
 
-    public void updateUser() {
-
+    public UserSimple updateUser(UserSimple dto) {
+        return userService.updateUser(dto);
     }
 
-    public void deleteUser() {
-
+    public void deleteUser(String id) {
+        userService.deleteUser(id);
     }
 
     public List<UserSimple> getAllUsers() {

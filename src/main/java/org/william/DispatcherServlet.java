@@ -1,16 +1,17 @@
 package org.william;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.william.controller.MessageController;
 import org.william.controller.UserController;
+import org.william.dto.SimpleResponse;
 import org.william.dto.UserCreate;
 import org.william.dto.UserSimple;
 import org.william.misc.HttpMisc;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 
 
@@ -57,11 +58,10 @@ class DispatcherServlet extends HttpServlet {
         if ("/user".equals(path)) {
             System.out.println("POST /user acessado");
             //Coleta o body da requisição e converte em uma string plana
-
-            String result = HttpMisc.recive(req,resp);
+            String result = HttpMisc.recive(req, resp);
 
             //Utilizo do jackson para converte o texto plano em um dto
-            UserCreate uc = new ObjectMapper().readValue(result,UserCreate.class);
+            UserCreate uc = new ObjectMapper().readValue(result, UserCreate.class);
             System.out.println("Convertido para json");
 
             //passo tudo para o controller
@@ -76,6 +76,42 @@ class DispatcherServlet extends HttpServlet {
             System.out.println("Convertendo novamente para json");
 
             resp.getWriter().println(resJson);
+        }
+    }
+
+    //esse verbo edita enviando todo o objeto necessario
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String path = req.getPathInfo();
+        if ("/user".equals(path)) {
+            System.out.println("PUT /user acessado");
+            String result = HttpMisc.recive(req, resp);
+            UserSimple us = new ObjectMapper().readValue(result, UserSimple.class);
+            UserSimple edited = userController.updateUser(us);
+            System.out.println("Retornou do controller");
+            resp.setStatus(HttpServletResponse.SC_OK);
+            String json = new ObjectMapper().writeValueAsString(edited);
+            System.out.println("Convertendo novamente para json");
+            resp.getWriter().println(json);
+        }
+    }
+
+    //esse verbo deleta o elemento, e tambem ele pega o id do parametro da querry
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String path = req.getPathInfo();
+        if ("/user".equals(path)) {
+            try{
+                String id = req.getParameter("id").trim();
+                userController.deleteUser(id);
+                SimpleResponse sp = new SimpleResponse("200", "Deletado");
+                String Json = new ObjectMapper().writeValueAsString(sp);
+                resp.getWriter().println(Json);
+            }catch (Exception e){
+                resp.getWriter().println(e);
+            }
         }
     }
 }
