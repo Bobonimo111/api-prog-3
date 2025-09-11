@@ -1,79 +1,166 @@
-# Objetivo 
-Objetivo dessa pequana api é implementar o funcionamento porbaixo dos panos de reflexion injeção de dependendecia e inversão de controles
-Alem de entender os fucionamentos básicos de uma API,em java utilizando jetty servelet para ser o server, e jackson para tratar JSONs 
+# MiniSpringApp -- API de Estudo
 
-Foi implementado 5 rotas simples, com controllers e services com pouco ou nenhum tratamento de erros
+## 📚 Objetivo
 
-As rotas implementam duas classes chamadas UserSimple e UserCreate, que são utilizados majoritamriamente como DTO´s e para salvar os dados em memoria 
+Esta pequena API foi criada com o intuito de **explorar e compreender
+conceitos de baixo nível** como: - Reflexão\
+- Injeção de Dependência\
+- Inversão de Controle (IoC)
 
-# Como utlizar
-Inicilizando o main que se encontra no arquivo MiniSpringApp, o servidor ir iniciar na porta 
-> http://localhost:3569
+Além disso, busca demonstrar os fundamentos básicos de uma API em
+**Java**, utilizando: - **Jetty Servlet** como servidor - **Jackson**
+para tratamento de JSONs
 
-Onde pode-se acesar o path
-> /hello
+A API implementa **5 rotas simples**, com controllers e services,
+focando no funcionamento interno --- **com pouco ou nenhum tratamento de
+erros**, para fins didáticos.
 
-retorno
->"Olá do serviço gerenciado pelo nosso mini Spring!"
+------------------------------------------------------------------------
 
-o servidor esta funionando 
+## 📝 Estrutura
 
-Json requerido:
->{
-"nome": "Não mais josue",
-"email": "email@email.com.br",
-"senha": null
+As rotas utilizam duas classes principais: - `UserSimple`\
+- `UserCreate`
+
+Essas classes funcionam como **DTOs** e para **armazenar dados em
+memória**.
+
+------------------------------------------------------------------------
+
+## 🚀 Como Executar
+
+1.  Clone este repositório.\
+2.  Abra o projeto em sua IDE Java.\
+3.  Localize o arquivo `MiniSpringApp` e execute o método `main`.
+
+O servidor iniciará na porta:
+
+    http://localhost:3569
+
+Para testar, acesse:
+
+    http://localhost:3569/hello
+
+Resposta esperada:
+
+``` json
+"Olá do serviço gerenciado pelo nosso mini Spring!"
+```
+
+------------------------------------------------------------------------
+
+## 🔗 Endpoints
+
+### Estrutura geral
+
+Todas as rotas estão sob o path `/user`.\
+O comportamento varia conforme o **verbo HTTP**.
+
+------------------------------------------------------------------------
+
+### POST `/user`
+
+Cria um novo usuário.\
+**Body Exemplo:**
+
+``` json
+{
+  "nome": "Não mais josue",
+  "email": "email@email.com.br",
+  "senha": null
 }
+```
 
-Os campos podem ficar null ou serem removidos completamente, so não é possivel adicionar outros campos ja que o jackson não vai conseguir reconhecer e retornar uma excessão
+**Resposta:**
 
-> Todas as rotas são /user a unica mudança é o seu verbo HTTP
+``` json
+{
+  "nome": "Não mais josue",
+  "email": "email@email.com.br",
+  "senha": null,
+  "id": "user-1757619162"
+}
+```
 
-POST: 
->{
-"nome": "Não mais josue",
-"email": "email@email.com.br",
-"senha": null
-}
->
-resposta
->{
-"nome": "Não mais josue",
-"email": "email@email.com.br",
-"senha": null,
-"id": "user-1757619162"
-}
+------------------------------------------------------------------------
 
-GET resposta é uma lista
->[{
-"nome": "Não mais josue",
-"email": "email@email.com.br",
-"senha": null,
-"id": "user-1757619162"
-}]
+### GET `/user`
 
-DELETE passamos um paramentro de querry
->/user?id=user-1757619162
-> 
-retorno:
-> {
-"data": "2025-09-11T16:39:04.952912300",
-"code": "200",
-"message": "Deletado"
+Retorna todos os usuários cadastrados.\
+**Resposta:**
+
+``` json
+[
+  {
+    "nome": "Não mais josue",
+    "email": "email@email.com.br",
+    "senha": null,
+    "id": "user-1757619162"
+  }
+]
+```
+
+------------------------------------------------------------------------
+
+### DELETE `/user?id={idDoUsuario}`
+
+Remove um usuário específico.\
+**Resposta:**
+
+``` json
+{
+  "data": "2025-09-11T16:39:04.952912300",
+  "code": "200",
+  "message": "Deletado"
 }
->
-PUT passamos todo o objeto, sem modificar o id;
->{
-"nome": "agora é josue",
-"email": "email@email.com.br",
-"senha": null,
-"id": "user-1757619162"
+```
+
+------------------------------------------------------------------------
+
+### PUT `/user`
+
+Atualiza um usuário existente.\
+**Body Exemplo:**
+
+``` json
+{
+  "nome": "agora é josue",
+  "email": "email@email.com.br",
+  "senha": null,
+  "id": "user-1757619162"
 }
-> 
-RETORNO sera o mesmo objeto que enviamos
->{
-"nome": "agora é josue",
-"email": "email@email.com.br",
-"senha": null,
-"id": "user-1757619162"
+```
+
+**Resposta:**
+
+``` json
+{
+  "nome": "agora é josue",
+  "email": "email@email.com.br",
+  "senha": null,
+  "id": "user-1757619162"
 }
+```
+
+------------------------------------------------------------------------
+
+## ⚠️ Observações Importantes
+
+-   Os campos podem ser `null` ou omitidos.\
+-   Não é possível adicionar campos extras (o Jackson lançará exceção).\
+-   Projeto criado para fins **educacionais**.
+
+------------------------------------------------------------------------
+
+## 🛠️ Tecnologias Utilizadas
+
+-   Java\
+-   Jetty Servlet\
+-   Jackson
+
+------------------------------------------------------------------------
+
+## 📄 Licença
+
+Este projeto é distribuído sob a licença MIT.\
+Sinta-se à vontade para usar, modificar e contribuir.
