@@ -1,19 +1,18 @@
 package org.william.service;
 
-import org.william.DataBase;
+import org.william.DumbDataBase;
 import org.william.MyService;
 import org.william.dto.UserCreate;
 import org.william.dto.UserSimple;
 
-import javax.xml.crypto.Data;
 import java.util.List;
 
 @MyService
 public class UserService {
 
-    public final DataBase dataBase;
+    public final DumbDataBase dataBase;
 
-    public UserService(DataBase dataBase) {
+    public UserService(DumbDataBase dataBase) {
         this.dataBase = dataBase;
     }
 

@@ -23,19 +23,24 @@ class DispatcherServlet extends HttpServlet {
         this.userController = userController;
     }
 
+    //Essa rota transcreve o verbo GET do protocolo HTTP
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         String path = req.getPathInfo();
 
         // Roteamento bem simples
-
         if ("/hello".equals(path)) {
             resp.setContentType("text/plain");
             resp.getWriter().println(controller.hello());
         } else if ("/user".equals(path)) {
+            //Definindo o tipo de conteudo para o HEADER da resposta para API
             resp.setContentType("application/json");
+            //Definindo uma resposta no HEADER da requisiçao
+            resp.setStatus(HttpServletResponse.SC_OK);
+            //Convertendo o resultado do controller, para um jason utilizadno jackson
             String response = new ObjectMapper().writeValueAsString(userController.getAllUsers());
+            //Enviando a resposata de volta para o cliente
             resp.getWriter().println(response);
         } else {
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -43,6 +48,7 @@ class DispatcherServlet extends HttpServlet {
         }
     }
 
+    //Essa rota transcreve o verbo POST do protocolo HTTP
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
@@ -61,6 +67,9 @@ class DispatcherServlet extends HttpServlet {
             //passo tudo para o controller
             UserSimple us = userController.createUser(uc);
             System.out.println("Retornou do controller");
+
+            //definindo o status da requisiç~ao no header para CREATED 201
+            resp.setStatus(HttpServletResponse.SC_CREATED);
 
             //Converto para json novamente
             String resJson = new ObjectMapper().writeValueAsString(us);

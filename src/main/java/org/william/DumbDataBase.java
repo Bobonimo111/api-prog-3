@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @MyComponent
-public class DataBase  {
+public class DumbDataBase {
     List<UserSimple> data;
-    public DataBase() {
+    public DumbDataBase() {
         this.data = new ArrayList<UserSimple>();
     }
 
